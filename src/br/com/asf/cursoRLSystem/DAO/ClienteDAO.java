@@ -15,20 +15,12 @@ import br.com.asf.cursoRLSystem.VO.ClienteVO;
 
 public class ClienteDAO {
 	
-	private Connection getConexao(){
-		Connection toReturn = null;
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			toReturn = DriverManager.getConnection("jdbc:mysql://localhost/bdcursojsf","root","asfmegas18");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return toReturn;
+	private Connection getConexao() throws ClassNotFoundException, SQLException{
+		Class.forName("com.mysql.jdbc.Driver");
+		return DriverManager.getConnection("jdbc:mysql://localhost/bdcursojsf","root","asfmegas18");
 	}
 	
-	public boolean insert(ClienteVO vo) throws SQLException{
+	public boolean insert(ClienteVO vo) throws  ClassNotFoundException, SQLException{
 		String sql = "insert into clientes (nome,email,idade) values (?,?,?)";
 		boolean toReturn = false;
 		int x = 0;
@@ -44,7 +36,7 @@ public class ClienteDAO {
 		return toReturn;
 	}
 	
-	public boolean delete(ClienteVO vo) throws SQLException{
+	public boolean delete(ClienteVO vo) throws  ClassNotFoundException, SQLException{
 		String sql = "delete from clientes where id = ?";
 		boolean toReturn = false;
 			PreparedStatement stmt = getConexao().prepareStatement(sql);
@@ -57,7 +49,7 @@ public class ClienteDAO {
 		return toReturn;
 	}
 	
-	public boolean update(ClienteVO vo) throws SQLException{
+	public boolean update(ClienteVO vo) throws  ClassNotFoundException, SQLException{
 		String sql = "update clientes set nome=?, email=?, idade=? where id =?";
 		boolean toReturn = false;
 		int x = 0;
@@ -74,7 +66,7 @@ public class ClienteDAO {
 		return toReturn;
 	}
 	
-	public ClienteVO getById(int id) throws SQLException{
+	public ClienteVO getById(int id) throws  ClassNotFoundException, SQLException{
 		String sql = "select * from clientes where id = ?";
 		ClienteVO cliente = new ClienteVO();
 			PreparedStatement stmt = getConexao().prepareStatement(sql);
@@ -93,7 +85,7 @@ public class ClienteDAO {
 		return cliente;
 	}
 	
-	public List<ClienteVO> getListAll(ClienteVO vo) throws SQLException{
+	public List<ClienteVO> getListAll(ClienteVO vo) throws  ClassNotFoundException, SQLException{
 		String sql = "select * from clientes where id = ?";
 		List<ClienteVO> clienteList = new ArrayList<ClienteVO>();
 			PreparedStatement stmt = getConexao().prepareStatement(sql);
