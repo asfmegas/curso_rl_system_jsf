@@ -28,11 +28,10 @@ public class ClienteDAO {
 		return toReturn;
 	}
 	
-	public boolean insert(ClienteVO vo){
+	public boolean insert(ClienteVO vo) throws SQLException{
 		String sql = "insert into clientes (nome,email,idade) values (?,?,?)";
 		boolean toReturn = false;
 		int x = 0;
-		try{
 			PreparedStatement stmt = getConexao().prepareStatement(sql);
 			stmt.setString(++x, vo.getNome());
 			stmt.setString(++x, vo.getEmail());
@@ -42,16 +41,12 @@ public class ClienteDAO {
 				toReturn = true;
 			}
 			stmt.close();
-		}catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, "Erro");
-		}
 		return toReturn;
 	}
 	
-	public boolean delete(ClienteVO vo){
+	public boolean delete(ClienteVO vo) throws SQLException{
 		String sql = "delete from clientes where id = ?";
 		boolean toReturn = false;
-		try{
 			PreparedStatement stmt = getConexao().prepareStatement(sql);
 			stmt.setInt(1, vo.getId());
 			
@@ -59,17 +54,13 @@ public class ClienteDAO {
 				toReturn = true;
 			}
 			stmt.close();
-		}catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, "Erro");
-		}
 		return toReturn;
 	}
 	
-	public boolean update(ClienteVO vo){
+	public boolean update(ClienteVO vo) throws SQLException{
 		String sql = "update clientes set nome=?, email=?, idade=? where id =?";
 		boolean toReturn = false;
 		int x = 0;
-		try{
 			PreparedStatement stmt = getConexao().prepareStatement(sql);
 			stmt.setString(++x, vo.getNome());
 			stmt.setString(++x, vo.getEmail());
@@ -80,16 +71,12 @@ public class ClienteDAO {
 				toReturn = true;
 			}
 			stmt.close();
-		}catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, "Erro");
-		}
 		return toReturn;
 	}
 	
-	public ClienteVO getById(int id){
+	public ClienteVO getById(int id) throws SQLException{
 		String sql = "select * from clientes where id = ?";
 		ClienteVO cliente = new ClienteVO();
-		try{
 			PreparedStatement stmt = getConexao().prepareStatement(sql);
 			stmt.setInt(1, id);
 			
@@ -103,16 +90,12 @@ public class ClienteDAO {
 			}
 			rs.close();
 			stmt.close();
-		}catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, "Erro");
-		}
 		return cliente;
 	}
 	
-	public List<ClienteVO> getListAll(ClienteVO vo){
+	public List<ClienteVO> getListAll(ClienteVO vo) throws SQLException{
 		String sql = "select * from clientes where id = ?";
 		List<ClienteVO> clienteList = new ArrayList<ClienteVO>();
-		try{
 			PreparedStatement stmt = getConexao().prepareStatement(sql);
 			stmt.setInt(1, vo.getId());
 			
@@ -127,9 +110,6 @@ public class ClienteDAO {
 			}
 			rs.close();
 			stmt.close();
-		}catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, "Erro");
-		}
 		return clienteList;
 	}
 }
